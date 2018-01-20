@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Googlemaps Heatmap Layer</title>
+    <style>
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0; font-family:sans-serif; }
+      #map-canvas { height: 100% }
+      h1 { position:absolute; background:black; color:white; padding:10px; font-weight:200; z-index:10000;}
+      #all-examples-info { position:absolute; background:white; font-size:16px; padding:20px; bottom:20px; width:350px; line-height:150%; border:1px solid rgba(0,0,0,.2);}
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="heatmap.js"></script>
+    <script src="gmaps-heatmap.js"></script>
+  </head>
+  <body>
+    <!-- <h1>Gmaps Heatmap Overlay Example</h1> -->
+    <div id="map-canvas"></div>
+    <div id="all-examples-info">
+          <strong style="font-weight:bold;line-height:200%;font-size:18px;">Looking for more examples?</strong> <br />Check out the full <a href="http://www.patrick-wied.at/static/heatmapjs/examples.html?utm_source=gh_local" target="_blank">list of all heatmap.js examples</a> with more pointers &amp; inline documentation.
+        </div>
+    
+    <script>
+        // map center
+        var myLatlng = new google.maps.LatLng(37.329732, -121.901782);
+        // map options,
+        var myOptions = {
+          zoom: 11,
+          center: myLatlng
+        };
+        // standard map
+        map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+        // heatmap layer
+        heatmap = new HeatmapOverlay(map, 
+          {
+            // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+            "radius": 0.003,
+            "maxOpacity": 1, 
+            // scales the radius based on map zoom
+            "scaleRadius": true, 
+            // if set to false the heatmap uses the global maximum for colorization
+            // if activated: uses the data maximum within the current map boundaries 
+            //   (there will always be a red spot with useLocalExtremas true)
+            "useLocalExtrema": true,
+            // which field name in your data represents the latitude - default "lat"
+            latField: 'lat',
+            // which field name in your data represents the longitude - default "lng"
+            lngField: 'lng',
+            // which field name in your data represents the data value - default "value"
+            valueField: 'count'
+          }
+        );
+        var testData = {
+          max: 100,
+          data: [{'lat': 37.329732, 'lng': -121.901782, 'count': 1153.333333},
+{'lat': 37.330698, 'lng': -121.888979, 'count': 1153.333333},
+{'lat': 37.333988, 'lng': -121.894902, 'count': 1153.333333},
+{'lat': 37.331415, 'lng': -121.8932, 'count': 1153.333333},
+{'lat': 37.336721, 'lng': -121.894074, 'count': 1153.333333},
+{'lat': 37.333798, 'lng': -121.886943, 'count': 1153.333333},
+{'lat': 37.330165, 'lng': -121.885831, 'count': 1153.333333},
+{'lat': 37.348742, 'lng': -121.894715, 'count': 285.3333333},
+{'lat': 37.337391, 'lng': -121.886995, 'count': 1153.333333},
+{'lat': 37.335885, 'lng': -121.88566, 'count': 1153.333333},
+{'lat': 37.332808, 'lng': -121.883891, 'count': 1153.333333},
+{'lat': 37.339301, 'lng': -121.889937, 'count': 1153.333333},
+{'lat': 37.332692, 'lng': -121.900084, 'count': 1153.333333},
+{'lat': 37.333955, 'lng': -121.877349, 'count': 1153.333333},
+{'lat': 37.481758, 'lng': -122.226904, 'count': 363.6666667},
+{'lat': 37.486078, 'lng': -122.232089, 'count': 363.6666667},
+{'lat': 37.487616, 'lng': -122.229951, 'count': 752.3333333},
+{'lat': 37.484219, 'lng': -122.227424, 'count': 363.6666667},
+{'lat': 37.48537, 'lng': -122.203288, 'count': 752.3333333},
+{'lat': 37.487682, 'lng': -122.223492, 'count': 752.3333333},
+{'lat': 37.389218, 'lng': -122.081896, 'count': 96.33333333},
+{'lat': 37.394358, 'lng': -122.076713, 'count': 96.33333333},
+{'lat': 37.40694, 'lng': -122.106758, 'count': 197.5},
+{'lat': 37.390277, 'lng': -122.066553, 'count': 96.33333333},
+{'lat': 37.400443, 'lng': -122.108338, 'count': 197.5},
+{'lat': 37.385956, 'lng': -122.083678, 'count': 96.33333333},
+{'lat': 37.400241, 'lng': -122.099076, 'count': 96.33333333},
+{'lat': 37.443988, 'lng': -122.164759, 'count': 447},
+{'lat': 37.444521, 'lng': -122.163093, 'count': 447},
+{'lat': 37.429082, 'lng': -122.142805, 'count': 197.5},
+{'lat': 37.448598, 'lng': -122.159504, 'count': 447},
+{'lat': 37.4256839, 'lng': -122.1377775, 'count': 197.5},
+{'lat': 37.795001, 'lng': -122.39997, 'count': 1623.333333},
+{'lat': 37.79728, 'lng': -122.398436, 'count': 1623.333333},
+{'lat': 37.794231, 'lng': -122.402923, 'count': 1623.333333},
+{'lat': 37.795425, 'lng': -122.404767, 'count': 1623.333333},
+{'lat': 37.788975, 'lng': -122.403452, 'count': 2212.666667},
+{'lat': 37.799953, 'lng': -122.398525, 'count': 1623.333333},
+{'lat': 37.790302, 'lng': -122.390637, 'count': 1764},
+{'lat': 37.795392, 'lng': -122.394203, 'count': 1623.333333},
+{'lat': 37.791464, 'lng': -122.391034, 'count': 1764},
+{'lat': 37.783871, 'lng': -122.408433, 'count': 6027},
+{'lat': 37.787152, 'lng': -122.388013, 'count': 1764},
+{'lat': 37.789756, 'lng': -122.394643, 'count': 1764},
+{'lat': 37.792251, 'lng': -122.397086, 'count': 2212.666667},
+{'lat': 37.781752, 'lng': -122.405127, 'count': 6027},
+{'lat': 37.77865, 'lng': -122.418235, 'count': 6006},
+{'lat': 37.781332, 'lng': -122.418603, 'count': 6006},
+{'lat': 37.80477, 'lng': -122.403234, 'count': 2575},
+{'lat': 37.780526, 'lng': -122.390288, 'count': 1016.666667},
+{'lat': 37.785299, 'lng': -122.396236, 'count': 1764},
+{'lat': 37.786978, 'lng': -122.398108, 'count': 2212.666667},
+{'lat': 37.782259, 'lng': -122.392738, 'count': 1764},
+{'lat': 37.771058, 'lng': -122.402717, 'count': 7039.666667},
+{'lat': 37.774814, 'lng': -122.418954, 'count': 6006},
+{'lat': 37.776619, 'lng': -122.417385, 'count': 6006},
+{'lat': 37.784878, 'lng': -122.401014, 'count': 2212.666667},
+{'lat': 37.7766, 'lng': -122.39547, 'count': 1016.666667},
+{'lat': 37.776617, 'lng': -122.39526, 'count': 1016.666667},
+{'lat': 37.788446, 'lng': -122.408499, 'count': 6027},
+{'lat': 37.781039, 'lng': -122.411748, 'count': 6006},
+{'lat': 37.798522, 'lng': -122.407245, 'count': 1623.333333},
+{'lat': 37.794139, 'lng': -122.394434, 'count': 1623.333333},
+{'lat': 37.7913, 'lng': -122.399051, 'count': 2212.666667},
+{'lat': 37.786305, 'lng': -122.404966, 'count': 2212.666667},
+{'lat': 37.789625, 'lng': -122.400811, 'count': 2212.666667},
+{'lat': 37.352601, 'lng': -121.905733, 'count': 485.6666667},
+{'lat': 37.798541, 'lng': -122.400862, 'count': 1623.333333},
+{'lat': 37.491269, 'lng': -122.236234, 'count': 752.3333333},
+{'lat': 37.342725, 'lng': -121.895617, 'count': 285.3333333}]
+        };
+        heatmap.setData(testData);
+</script>
+  </body>
+</html>
