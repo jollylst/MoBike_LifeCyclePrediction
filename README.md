@@ -1,5 +1,8 @@
 ## MoBike -- Bay Area Bike Share Lifecycle Prediction
 
+**Note**: This is a class project collaborated with three other members.
+
+
 ### Abstract
 
 Bike share programs provide an environmentally friendly and healthy alternative to commuting within and exploring a city. However, Ford GoBike currently expends extra energy in order to consistently check on the condition of their bikes. To determine whether a bike is in need of repair, they depend on customer feedback or must send employees on frequent rounds to check up on bikes at each station. In this paper, we applied machine learning models to help For GoBike predict the total length of the lifetime for bikes within the San Francisco Bay Area. We defined the lifecycle of a bike to be the total duration for each of its trips before the bike was repaired or recycled. We determined this definition of lifecycle by using K-Means and Probability Distribution methods. We found the best intervals of inactivity between lifecycles (7 days and 4 days when parking station is changed) to group trips into distinct lifecycles. Data analysis was then conducted to study the relationship between lifecycle and potential features, including trip count, subscriber ratio, temperature, education level, etc. After that, we applied and compared Linear Regression with Lasso Regularization, Decision Tree, and Random Forest Models to predict the lifecycle of bikes based on features of trips, weather, income, education, and crime data. Through error analysis using the error percentage (defined in section 7) of the Linear Regression Model, we found and excluded outliers within the data. With the new trimmed dataset, we trained Decision Tree and Random Forest Models, and reached a better error percentage of 20%.
